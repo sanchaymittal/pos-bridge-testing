@@ -1,0 +1,15 @@
+{
+  "name": "pos-bridge-test",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "@maticnetwork/maticjs": "github:maticnetwork/matic.js#4456e8ce9378d74b95001d3c4573d216d4f0e438",
+    "@maticnetwork/meta": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
