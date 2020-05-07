@@ -11,13 +11,13 @@ module.exports = {
   ROOTWETH_ADDRESS: "0x7BdDd37621186f1382FD59e1cCAE0316F979a866", // This is a wrapped ETH ERC20 contract address so that we can support ETH deposits to the sidechain
   CHILDCHAIN_ADDRESS: "0xa2EF03edfA084ac9e5Bf110e409Ed5483BAe4101", // This is child chain contract address
   MATICWETH_ADDRESS: "0x8567184E6F9b1B77f24AfF6168453419AD22f90e", // The corresponding wrapped ETH ERC20 contract address on the Matic chain
-  PRIVATE_KEY:
-    "0xF2451C58A9668A104B5547EBB3831FCD895DA96385040E47DD0C175AF61F03A0", // A sample private key prefix with `0x`
-  FROM_ADDRESS: "0x75e4DD0587663Fce5B2D9aF7fbED3AC54342d3dB", // Your address
-  ROPSTEN_TEST_TOKEN: "0x884f49c6a175fF34b9B1194eb4cd36C05510e3b9", // Contract for ERC20 in Ropsten
   MATIC_TEST_TOKEN: "0xa1035dca1e0948029a7Ddd357c2F22d829Ba00d5", // Contract for ERC20 in Matic testnet
-  ROPSTEN_ERC721_TOKEN: "0x07d799252cf13c01f602779b4dce24f4e5b08bbd", // Contract for ERC721 in Ropsten testnet
-  MATIC_ERC721_TOKEN: "0x8D5231e0B79edD9331e0CF0d4B9f3F30d05C47A5", // Contract for ERC721 in matic testnet
+  // ROPSTEN_ERC721_TOKEN: "0x07d799252cf13c01f602779b4dce24f4e5b08bbd", // Contract for ERC721 in Ropsten testnet
+  // MATIC_ERC721_TOKEN: "0x8D5231e0B79edD9331e0CF0d4B9f3F30d05C47A5", // Contract for ERC721 in matic testnet
   POS_ROOT_CHAIN_MANAGER_ADDRESS: "0x2533Ff3dC3E2389EE5304dC8686d66D08758BA99", // Address of RootChainManager for POS Portal
-  MATIC_POS_TEST_TOKEN: "0x7f57bd9A688b1461633aE56452C2391b2f0d2e91", // Contract for POS ERC20 on matic testnet
+  ROPSTEN_POS_TEST_TOKEN: "0x884f49c6a175fF34b9B1194eb4cd36C05510e3b9", // Contract for ERC20 in Ropsten
+  MATIC_POS_TEST_TOKEN: "0xa1035dca1e0948029a7Ddd357c2F22d829Ba00d5", // Contract for POS ERC20 on matic testnet
+
+  ROPSTEN_POS_NA_TEST_TOKEN: "0x86632c0889AE0f7bc9005230Db6bE2527Da046EA",
+  MATIC_POS_NA_TEST_TOKEN: "0xbB6c5C74b1499BB3d88c5CFbC5Ddc49fFc40C928"
 };

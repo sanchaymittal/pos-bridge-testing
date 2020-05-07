@@ -11,7 +11,6 @@
     "react-scripts": "3.4.1",
     "@maticnetwork/maticjs": "github:maticnetwork/matic.js#4456e8ce9378d74b95001d3c4573d216d4f0e438",
     "@maticnetwork/meta": "^1.0.3"
-
   },
   "scripts": {
     "start": "react-scripts start",
