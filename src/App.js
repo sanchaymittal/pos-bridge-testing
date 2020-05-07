@@ -1,3 +1,7 @@
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
 const Matic = require('@maticnetwork/maticjs').default
 const config = require('./config')
 
@@ -13,12 +17,12 @@ const matic = new Matic({
   posRootChainManager: config.POS_ROOT_CHAIN_MANAGER_ADDRESS,
 })
 
-async function init() {
-  matic.setWallet(config.PRIVATE_KEY)
-}
+// async function init() {
+//   matic.setWallet(config.PRIVATE_KEY)
+// }
 
 async function approve() { // eslint-disable-line
-  init();
+  // init();
   const amount = "100000000000000000";
   const tx = await matic
     .approvePOSERC20ForDeposit(rootToken, amount, { from })
@@ -27,6 +31,20 @@ async function approve() { // eslint-disable-line
     });
 }
 
-async function 
+function App() {
+  
+  return (
+    <div className="App">
+      {/* <header className="App-header"> */}
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+      {/* </header> */}
+      <div>
+        <button onClick = {approve}>
+          approve
+        </button>
+      </div>
+    </div>
+  );
+}
 
-execute();
+export default App;

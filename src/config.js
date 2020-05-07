@@ -12,7 +12,7 @@ module.exports = {
   CHILDCHAIN_ADDRESS: "0xa2EF03edfA084ac9e5Bf110e409Ed5483BAe4101", // This is child chain contract address
   MATICWETH_ADDRESS: "0x8567184E6F9b1B77f24AfF6168453419AD22f90e", // The corresponding wrapped ETH ERC20 contract address on the Matic chain
   PRIVATE_KEY:
-    "F2451C58A9668A104B5547EBB3831FCD895DA96385040E47DD0C175AF61F03A0", // A sample private key prefix with `0x`
+    "0xF2451C58A9668A104B5547EBB3831FCD895DA96385040E47DD0C175AF61F03A0", // A sample private key prefix with `0x`
   FROM_ADDRESS: "0x75e4DD0587663Fce5B2D9aF7fbED3AC54342d3dB", // Your address
   ROPSTEN_TEST_TOKEN: "0x884f49c6a175fF34b9B1194eb4cd36C05510e3b9", // Contract for ERC20 in Ropsten
   MATIC_TEST_TOKEN: "0xa1035dca1e0948029a7Ddd357c2F22d829Ba00d5", // Contract for ERC20 in Matic testnet
