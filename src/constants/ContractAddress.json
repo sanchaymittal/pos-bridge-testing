@@ -1,0 +1,13 @@
+{
+    "root": {
+      "RootChainManager": "0x20586df7527Df99F6532E7a482803ad3159b447e",
+      "DummyStateSender": "0x62a2dcc2F83E6AaC8642d418c8bD8284CaF74081",
+      "DummyToken": "0xD5AE7F6bbd972AB9cd56e2107EF025120bC9034F",
+      "WETH": "0xf99b8Ee4087f304Be82E76bF20C57f3B85B039D1"
+    },
+    "child": {
+      "ChildChainManager": "0xD853bad05e4dD887A94d783DCc11508325a3c9F2",
+      "DummyToken": "0x480041404833068407D501BE0c0d9e986C816E5A",
+      "ETH": "0x5D43D12b57355B922B274cC6CCfdc67C51187eDB"
+    }
+  }
