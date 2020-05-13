@@ -6,10 +6,10 @@ import {
   ROOT_DUMMY_TOKEN_ABI,
   ROOT_DUMMY_TOKEN_ADDRESS,
   ERC20_ABI,
-} from "./constants";
+} from "../constants";
 
 const Matic = require("@maticnetwork/maticjs");
-const config = require("./constants/config");
+const config = require("../constants/config");
 const Web3 = require("web3");
 window.ethereum.enable().catch((error) => {
   console.log(error);
@@ -18,7 +18,7 @@ window.ethereum.enable().catch((error) => {
 const web3 = new Web3(window.ethereum);
 
 const matic = new Matic({
-  maticProvider: window.ethereum,
+  maticProvider: config.MATIC_PROVIDER,
   parentProvider: window.ethereum,
   rootChain: config.ROOTCHAIN_ADDRESS,
   posRootChainManager: ROOT_CHAIN_MANAGER_ADDRESS,
@@ -54,7 +54,7 @@ export const mint = async () => {
   const address = await getDefaultAccount();
   const userBalance = await getUserTokenBalance(
     ROOT_DUMMY_TOKEN_ADDRESS,
-    window.ethereum
+    config.PARENT_PROVIDER
   );
   if (userBalance < 1) {
     const token = new web3.eth.Contract(
@@ -82,11 +82,13 @@ export const getUserTokenBalance = async (pTokenAddress, provider) => {
   return getAmountInEth(balance);
 };
 
-// export const getEthBalance = async () => {
-//   const web3 = new Web3(window.ethereum);
-//   const address = await getDefaultAccount();
-//   web3.eth.getBalance(address);
-// };
+export const getEthBalance = async (provider) => {
+  const web3 = new Web3(new Web3.providers.HttpProvider(provider));
+  const address = await getDefaultAccount();
+  const balance = await web3.eth.getBalance(address);
+  return web3.utils.fromWei(balance);
+  // return balance;
+};
 
 export const rootToMatic = async (rootToken, amount) => {
   await approve(rootToken, amount);
@@ -174,9 +176,30 @@ export const deposit = async (rootToken, pAmount) => {
     });
 };
 
+export const depositEth = async (pAmount) => {
+  const amount = web3.utils.toWei(pAmount + "");
+  console.log(amount, pAmount);
+  const from = await getDefaultAccount();
+  await matic
+    .depositPOSEtherForUser(from, amount, {
+      from,
+      gasPrice: "80000000000",
+    })
+    .then(async (logs) => {
+      console.log("Deposit ETH: " + logs.transactionHash);
+    });
+}
+
 export const burn = async (childToken, pAmount) => {
+  const matic = new Matic({
+    maticProvider: window.ethereum,
+    parentProvider: config.PARENT_PROVIDER,
+    rootChain: config.ROOTCHAIN_ADDRESS,
+    posRootChainManager: ROOT_CHAIN_MANAGER_ADDRESS,
+  });
   const amount = web3.utils.toWei(pAmount + "");
   const from = await getDefaultAccount();
+  console.log(from, amount)
   let tx;
   await matic.burnPOSERC20(childToken, amount, { from }).then(async (logs) => {
     console.log("Burn: " + logs.transactionHash);
