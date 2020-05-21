@@ -11,7 +11,7 @@ import {
   CHILD_PROVIDER,
 } from "../constants";
 
-const MaticPOSClient = require('@maticnetwork/maticjs').MaticPOSClient
+const MaticPOSClient = require("@maticnetwork/maticjs").MaticPOSClient;
 const config = require("../constants/config");
 
 const maticPOSClient = new MaticPOSClient({
@@ -19,14 +19,21 @@ const maticPOSClient = new MaticPOSClient({
   parentProvider: window.ethereum,
   rootChain: PLASMA_ROOT_CHAIN_ADDRESS,
   posRootChainManager: ROOT_CHAIN_MANAGER_ADDRESS,
-})
+});
 const Web3 = require("web3");
 window.ethereum.enable().catch((error) => {
   console.log(error);
 });
 
 const web3 = new Web3(window.ethereum);
-
+export const getNetwork = async () => {
+  const chainId = await web3.eth.net.getId();
+  let network;
+  if (chainId === 3) network = "Ropsten";
+  else if (chainId === 15001) network = "Matic";
+  else network = "Unknown";
+  return network;
+};
 export async function getDefaultAccount() {
   try {
     const accounts = await getAccounts();
@@ -156,7 +163,7 @@ async function PromiseTimeout(delayms) {
 export const approve = async (rootToken, pAmount) => {
   const amount = web3.utils.toWei(pAmount + "");
   console.log(amount, pAmount);
-  console.log(rootToken)
+  console.log(rootToken);
   const from = await getDefaultAccount();
   await maticPOSClient
     .approveERC20ForDeposit(rootToken, amount, { from })
@@ -190,7 +197,7 @@ export const depositEth = async (pAmount) => {
     .then(async (logs) => {
       console.log("Deposit ETH: " + logs.transactionHash);
     });
-}
+};
 
 export const burn = async (childToken, pAmount) => {
   const maticPOSClient = new MaticPOSClient({
@@ -203,10 +210,12 @@ export const burn = async (childToken, pAmount) => {
   const from = await getDefaultAccount();
   console.log(from, amount);
   let tx;
-  await maticPOSClient.burnERC20(childToken, amount, { from }).then(async (logs) => {
-    console.log("Burn: " + logs.transactionHash);
-    tx = logs.transactionHash;
-  });
+  await maticPOSClient
+    .burnERC20(childToken, amount, { from })
+    .then(async (logs) => {
+      console.log("Burn: " + logs.transactionHash);
+      tx = logs.transactionHash;
+    });
   return tx;
 };
 
