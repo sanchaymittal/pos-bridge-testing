@@ -189,8 +189,7 @@ function App() {
                         placement="bottom"
                         overlay={
                           <Tooltip id="tooltip-bottom">
-                            Ropsten -> Matic : Lock your tokens in Plasma
-                            secured contract and mint on Matic
+                            Ropsten -> Matic : Lock your tokens in POS Portal contract and mint on Matic.
                           </Tooltip>
                         }
                       >
@@ -256,8 +255,7 @@ function App() {
                         placement="bottom"
                         overlay={
                           <Tooltip id="tooltip-bottom">
-                            Burn your token on Matic Chain to get unlock hash
-                            for Ropsten
+                            Burn your tokens on Matic chain so they can be exited from POS Portal on Main chain
                           </Tooltip>
                         }
                       >
@@ -299,8 +297,7 @@ function App() {
                         placement="bottom"
                         overlay={
                           <Tooltip id="tooltip-bottom">
-                            burn token hash to unlock the asset and receive it
-                            in your account.
+                            Submit proof for burnt tokens and exit them from POS Portal
                           </Tooltip>
                         }
                       >
