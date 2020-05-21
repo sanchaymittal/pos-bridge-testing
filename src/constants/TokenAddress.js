@@ -9,9 +9,9 @@ export const TOKEN_LIST = [
     rootTokenAddress: "0x5217e41200508b5A208A8D8736602d637213F827",
     childTokenAddress: "0x52995321e30824e9e4b3ED0B20C8e81615A7F520",
   },
-  {
-    tokenSymbol: "NADummy",
-    rootTokenAddress: "0x6f48E2CFEB92DEfD5B740b4CA62dB7A2DB028FaC",
-    childTokenAddress: "0x85F2bB9fB2F13b6Dc83410D950162aE66b2aff67",
-  },
+  // {
+  //   tokenSymbol: "NADummy",
+  //   rootTokenAddress: "0x6f48E2CFEB92DEfD5B740b4CA62dB7A2DB028FaC",
+  //   childTokenAddress: "0x85F2bB9fB2F13b6Dc83410D950162aE66b2aff67",
+  // },
 ];

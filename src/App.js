@@ -61,7 +61,12 @@ function App() {
   );
   const [ethRopstenBalance, setEthRopstenBalance] = React.useState("");
   const [ethMaticBalance, setEthMaticBalance] = React.useState("");
-  const [tokenAddress, setTokenAddress] = React.useState("");
+  const [rootTokenAddress, setRootTokenAddress] = React.useState(
+    TOKEN_LIST[0].rootTokenAddress
+  );
+  const [childTokenAddress, setChildTokenAddress] = React.useState(
+    TOKEN_LIST[0].childTokenAddress
+  );
   // const [
   //   NADummyTokenRopstenBalance,
   //   setNADummyTokenRopstenBalance,
@@ -139,6 +144,7 @@ function App() {
         <Container fluid="md">
           <Jumbotron className="p-jumbotron">
             <h2>Test PoS Portal and Network Agnostic Features of Matic</h2>
+            <h7>Hint: open the browser developer console to view any errors and warnings.</h7>
           </Jumbotron>
           <div className="row">
             <div className="col-md-6">
@@ -149,6 +155,8 @@ function App() {
                   <div className="row p-8">
                     <div className="col-md-3 p-0">
                       <FormControl
+                        onChange={(e) => setRootTokenAddress(e.target.value)}
+                        value={rootTokenAddress}
                         placeholder="Select Token"
                         aria-label="Select Token"
                         aria-describedby="token"
@@ -158,10 +166,7 @@ function App() {
                       >
                         <>
                           {TOKEN_LIST.map((placement) => (
-                            <option
-                              value={placement.rootTokenAddress}
-                              onChange={(e) => setTokenAddress(e.target.value)}
-                            >
+                            <option value={placement.rootTokenAddress}>
                               {placement.tokenSymbol}
                             </option>
                           ))}
@@ -193,9 +198,9 @@ function App() {
                           className="button-size m-left-8"
                           variant="outline-success"
                           onClick={() =>
-                            tokenAddress === ROOT_ETH_TOKEN_ADDRESS
+                            rootTokenAddress === ROOT_ETH_TOKEN_ADDRESS
                               ? depositEtherFor(amount)
-                              : deposit(tokenAddress, amount)
+                              : deposit(rootTokenAddress, amount)
                           }
                           size="small"
                         >
@@ -217,6 +222,8 @@ function App() {
                   <div className="row p-8">
                     <div className="col-md-3 p-0">
                       <FormControl
+                        onChange={(e) => setChildTokenAddress(e.target.value)}
+                        value={childTokenAddress}
                         placeholder="Select Token"
                         aria-label="Select Token"
                         aria-describedby="token"
@@ -226,10 +233,7 @@ function App() {
                       >
                         <>
                           {TOKEN_LIST.map((placement) => (
-                            <option
-                              value={placement.rootTokenAddress}
-                              onChange={(e) => setTokenAddress(e.target.value)}
-                            >
+                            <option value={placement.childTokenAddress}>
                               {placement.tokenSymbol}
                             </option>
                           ))}
@@ -260,7 +264,7 @@ function App() {
                         <Button
                           className="button-size m-left-8"
                           variant="outline-primary"
-                          onClick={() => burn(tokenAddress, burnAmount)}
+                          onClick={() => burn(childTokenAddress, burnAmount)}
                           size="small"
                         >
                           Burn
@@ -322,7 +326,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div className="row-md-6">
+              {/* <div className="row-md-6">
                 <div className="card">
                   <h2>Map Token</h2>
                   <p>ps: Only permissioned address can map token</p>
@@ -358,7 +362,7 @@ function App() {
                     Check Mapping
                   </button>
                 </div>
-              </div>
+              </div>*/}
             </div>
             <div className="col-md-6">
               <div className="row-md-3">
@@ -376,7 +380,7 @@ function App() {
                     </Badge>
                     <Button
                       className="col-md-3 balance"
-                      variant="secondary"
+                      variant="outline-secondary"
                       onClick={() => refreshRopstenBalance()}
                     >
                       Refresh
@@ -395,7 +399,7 @@ function App() {
                     </Badge>
                     <Button
                       className="col-md-3 balance"
-                      variant="secondary"
+                      variant="outline-secondary"
                       onClick={() => refreshMaticBalance()}
                     >
                       Refresh
@@ -405,10 +409,10 @@ function App() {
               </div>
               <div className="row-md-3">
                 <div className="card">
-                  <h3>Mint Dummy Tokens for Testing</h3>
-                  <button onClick={() => mint()} size="small">
+                  <h4>Mint Dummy Tokens for Testing</h4>
+                  <Button variant="outline-success" onClick={() => mint()} size="sm">
                     Mint Dummy Tokens
-                  </button>
+                  </Button>
                 </div>
               </div>
               <div className="row-md-6">
