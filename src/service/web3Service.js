@@ -3,9 +3,12 @@ import {
   CHILD_CHAIN_MANAGER_ABI,
   ROOT_CHAIN_MANAGER_ADDRESS,
   CHILD_CHAIN_MANAGER_ADDRESS,
+  PLASMA_ROOT_CHAIN_ADDRESS,
   ROOT_DUMMY_TOKEN_ABI,
   ROOT_DUMMY_TOKEN_ADDRESS,
   ERC20_ABI,
+  ROOT_PROVIDER,
+  CHILD_PROVIDER,
 } from "../constants";
 
 const MaticPOSClient = require('@maticnetwork/maticjs').MaticPOSClient
@@ -14,7 +17,7 @@ const config = require("../constants/config");
 const maticPOSClient = new MaticPOSClient({
   maticProvider: config.MATIC_PROVIDER,
   parentProvider: window.ethereum,
-  rootChain: config.ROOTCHAIN_ADDRESS,
+  rootChain: PLASMA_ROOT_CHAIN_ADDRESS,
   posRootChainManager: ROOT_CHAIN_MANAGER_ADDRESS,
 })
 const Web3 = require("web3");
@@ -54,7 +57,7 @@ export const mint = async () => {
   const address = await getDefaultAccount();
   const userBalance = await getUserTokenBalance(
     ROOT_DUMMY_TOKEN_ADDRESS,
-    config.PARENT_PROVIDER
+    ROOT_PROVIDER
   );
   if (userBalance < 1) {
     const token = new web3.eth.Contract(
@@ -103,7 +106,7 @@ export const rootToMatic = async (rootToken, amount) => {
 // }
 
 export const mapTokenRootChain = async (rootToken, childToken) => {
-  const web3 = new Web3(new Web3.providers.HttpProvider(config.PARENT_PROVIDER));
+  const web3 = new Web3(new Web3.providers.HttpProvider(ROOT_PROVIDER));
   const rootChainManager = web3.eth.Contract(
     ROOT_CHAIN_MANAGER_ABI,
     ROOT_CHAIN_MANAGER_ADDRESS
@@ -112,7 +115,7 @@ export const mapTokenRootChain = async (rootToken, childToken) => {
 };
 
 export const mapTokenChildChain = async (rootToken, childToken) => {
-  const web3 = new Web3(new Web3.providers.HttpProvider(config.MATIC_PROVIDER));
+  const web3 = new Web3(new Web3.providers.HttpProvider(CHILD_PROVIDER));
   const childChainManager = web3.eth.Contract(
     CHILD_CHAIN_MANAGER_ABI,
     CHILD_CHAIN_MANAGER_ADDRESS
@@ -121,28 +124,26 @@ export const mapTokenChildChain = async (rootToken, childToken) => {
 };
 
 export const checkMapToken = async (rootToken, childToken) => {
-  const rootChainManager = web3.eth.Contract(
+  const rootChainManager = new web3.eth.Contract(
     ROOT_CHAIN_MANAGER_ABI,
     ROOT_CHAIN_MANAGER_ADDRESS
   );
-  const rootToChild = await rootChainManager.methods.rootToChildToken(
-    rootToken
+  const rootToChild = await rootChainManager.methods
+    .rootToChildToken(rootToken)
+    .call();
+  const childToRoot = await rootChainManager.methods
+    .childToRootToken(childToken)
+    .call();
+  console.log(
+    rootToChild,
+    childToRoot,
+    rootToChild === childToken,
+    childToRoot === rootToken
   );
-  const childToRoot = await rootChainManager.methods.childToRootToken(
-    childToken
-  );
-  if (
-    web3.toBigNumber(rootToChild).isZero() ||
-    web3.toBigNumber(childToRoot).isZero()
-  ) {
-    if (web3.toBigNumber(rootToChild).isZero()) {
-      alert("Root to Child Token is not Mapped");
-    }
-    if (web3.toBigNumber(childToRoot).isZero()) {
-      alert("Child to Root Token is not Mapped");
-    }
-  } else {
+  if (rootToChild === childToken && childToRoot === rootToken) {
     alert("Token is mapped");
+  } else {
+    alert("Token is not mapped!!!");
   }
 };
 
@@ -155,6 +156,7 @@ async function PromiseTimeout(delayms) {
 export const approve = async (rootToken, pAmount) => {
   const amount = web3.utils.toWei(pAmount + "");
   console.log(amount, pAmount);
+  console.log(rootToken)
   const from = await getDefaultAccount();
   await maticPOSClient
     .approveERC20ForDeposit(rootToken, amount, { from })
@@ -193,13 +195,13 @@ export const depositEth = async (pAmount) => {
 export const burn = async (childToken, pAmount) => {
   const maticPOSClient = new MaticPOSClient({
     maticProvider: window.ethereum,
-    parentProvider: config.PARENT_PROVIDER,
-    rootChain: config.ROOTCHAIN_ADDRESS,
+    parentProvider: ROOT_PROVIDER,
+    rootChain: PLASMA_ROOT_CHAIN_ADDRESS,
     posRootChainManager: ROOT_CHAIN_MANAGER_ADDRESS,
   });
   const amount = web3.utils.toWei(pAmount + "");
   const from = await getDefaultAccount();
-  console.log(from, amount)
+  console.log(from, amount);
   let tx;
   await maticPOSClient.burnERC20(childToken, amount, { from }).then(async (logs) => {
     console.log("Burn: " + logs.transactionHash);
