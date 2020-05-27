@@ -1,17 +1,20 @@
 export const TOKEN_LIST = [
   {
-    tokenSymbol: "ETH",
-    rootTokenAddress: "0x33fbCcfb7499cD2daaADe2E1eAcecbDC42beEC96",
-    childTokenAddress: "0xe630a558B4E19AdAB649E7345fF14C6b4A5B6af0",
+    tokenName: "Wrapped Ether",
+	  tokenSymbol: "WETH",
+	  rootTokenAddress: "0x33fbCcfb7499cD2daaADe2E1eAcecbDC42beEC96",
+	  childTokenAddress: "0x911e1ea5C50DC54e1d24845ce056FB914bB25D96",
   },
   {
-    tokenSymbol: "DUMMY",
-    rootTokenAddress: "0x5217e41200508b5A208A8D8736602d637213F827",
-    childTokenAddress: "0x52995321e30824e9e4b3ED0B20C8e81615A7F520",
+    tokenName: "DummyToken",
+	  tokenSymbol: "DUMMY",
+	  rootTokenAddress: "0x0D2be3F144ca1f7c106F586eDA2Ab2F8921f89E6",
+	  childTokenAddress: "0xefa67A7B52972eF721a6D6227A3C356a62CcBa58",
   },
   // {
-  //   tokenSymbol: "NADummy",
-  //   rootTokenAddress: "0x6f48E2CFEB92DEfD5B740b4CA62dB7A2DB028FaC",
-  //   childTokenAddress: "0x85F2bB9fB2F13b6Dc83410D950162aE66b2aff67",
-  // },
+  //   tokenName: "Decentraland",
+	//   tokenSymbol: "MANA",
+	//   rootTokenAddress: "0x3486DC2Bf6d45Da6E0bb96a9999a4744F9a6B421",
+	//   childTokenAddress: "0xb6e5aaaE04acb59f2e7D951a9bC31855Ca2813aD",
+  // }
 ];
