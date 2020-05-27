@@ -44,10 +44,6 @@ function App() {
     const network = await getNetwork();
     setNetworkType(network);
     setAccount(address);
-    updateDummyTokenMaticBalance();
-    updateEthRopstenBalance();
-    updateEthMaticBalance();
-    updateDummyTokenRopstenBalance();
   });
   const [txHash, setTxHash] = React.useState("");
   const [account, setAccount] = React.useState("");
