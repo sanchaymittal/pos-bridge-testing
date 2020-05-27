@@ -84,8 +84,9 @@ export const transfer = async (pAmount, pRecipient, tokenAddress) => {
 export const approve = async (pAmount, spender, tokenAddress) => {
   const detail = await getContractDetails(tokenAddress);
   const amount = web3.utils.toWei(pAmount + "");
+  let userAddress = await getDefaultAccount();
   let functionSignature = detail.contract.methods
-    .transfer(spender, amount)
+    .approve(spender, amount)
     .encodeABI();
   console.log(functionSignature);
   executeMetaTransaction(functionSignature, detail.contract, detail.domainData);
