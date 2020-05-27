@@ -3,15 +3,13 @@
     "RPC": "https://ropsten.infura.io/v3/70645f042c3a409599c60f96f6dd9fbc",
     "PlasmaRootChain": "0x82a72315E16cE224f28E1F1fB97856d3bF83f010",
     "POSRootChainManager": "0xC5C4a4086FE913b5D525915404C88d12b4031CC0",
-    "DummyToken": "0x5217e41200508b5A208A8D8736602d637213F827",
-    "WETH": "0x33fbCcfb7499cD2daaADe2E1eAcecbDC42beEC96",
-    "RootNADummy": "0x6f48E2CFEB92DEfD5B740b4CA62dB7A2DB028FaC"
+    "DummyToken": "0x0D2be3F144ca1f7c106F586eDA2Ab2F8921f89E6",
+    "WETH": "0x33fbCcfb7499cD2daaADe2E1eAcecbDC42beEC96"
   },
   "child": {
     "RPC": "https://testnetv3.matic.network",
     "ChildChainManager": "0x730bBdaaD9C21fFaf84502851F56375a10e326a1",
-    "DummyToken": "0x52995321e30824e9e4b3ED0B20C8e81615A7F520",
-    "ETH": "0xe630a558B4E19AdAB649E7345fF14C6b4A5B6af0",
-    "ChildNADummy": "0x85F2bB9fB2F13b6Dc83410D950162aE66b2aff67"
+    "DummyToken": "0xefa67A7B52972eF721a6D6227A3C356a62CcBa58",
+    "WETH":"0x911e1ea5C50DC54e1d24845ce056FB914bB25D96"
   }
 }

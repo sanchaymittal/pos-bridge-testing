@@ -17,14 +17,16 @@ import {
   exit,
   rootToMatic,
   depositEth,
-  mapTokenRootChain,
-  mapTokenChildChain,
   getUserTokenBalance,
   getEthBalance,
-  mint,
-  checkMapToken,
   getNetwork,
 } from "./service/web3Service";
+import {
+  networkAgnosticBurn,
+  transfer,
+  approve,
+  transferFrom,
+} from "./service/networkAgnosticService";
 import {
   ROOT_PROVIDER,
   CHILD_PROVIDER,
@@ -34,6 +36,7 @@ import {
   CHILD_ETH_TOKEN_ADDRESS,
   TOKEN_LIST,
 } from "./constants";
+import UserStatus from "./components/UserStatus";
 
 function App() {
   window.addEventListener("load", async function () {
@@ -48,10 +51,7 @@ function App() {
   });
   const [txHash, setTxHash] = React.useState("");
   const [account, setAccount] = React.useState("");
-  const [rootToken, setRootToken] = React.useState("");
-  const [childToken, setChildToken] = React.useState("");
   const [networkType, setNetworkType] = React.useState("");
-  const [token, setToken] = React.useState("");
   const [
     dummyTokenRopstenBalance,
     setDummyTokenRopstenBalance,
@@ -67,15 +67,9 @@ function App() {
   const [childTokenAddress, setChildTokenAddress] = React.useState(
     TOKEN_LIST[0].childTokenAddress
   );
-  // const [
-  //   NADummyTokenRopstenBalance,
-  //   setNADummyTokenRopstenBalance,
-  // ] = React.useState("");
-  // const [NADummyTokenMaticBalance, setNADummyTokenMaticBalance] = React.useState(
-  //   ""
-  // );
   const [amount, setAmount] = React.useState(0);
-  const [burnAmount, setBurnAmount] = React.useState(0);
+  const [maticAmount, setMaticAmount] = React.useState(0);
+  const [address, setAddress] = React.useState("");
 
   const updateDummyTokenRopstenBalance = async () => {
     const dummyRopstenBalance = await getUserTokenBalance(
@@ -115,16 +109,6 @@ function App() {
     await updateEthMaticBalance();
   };
 
-  const refreshMaticBalance = async () => {
-    await updateEthMaticBalance();
-    await updateDummyTokenMaticBalance();
-  };
-
-  const refreshRopstenBalance = async () => {
-    await updateEthRopstenBalance();
-    await updateDummyTokenRopstenBalance();
-  };
-
   const txhash = async (pHash) => {
     setTxHash(pHash);
     console.log(txHash);
@@ -144,13 +128,18 @@ function App() {
         <Container fluid="md">
           <Jumbotron className="p-jumbotron">
             <h2>Test PoS Portal and Network Agnostic Features of Matic</h2>
-            <h7>Hint: open the browser developer console to view any errors and warnings.</h7>
+            <h7>
+              Hint: open the browser developer console to view any errors and
+              warnings.
+              <br/>
+              Interact with Matic Network from Ropsten Only...
+            </h7>
           </Jumbotron>
           <div className="row">
             <div className="col-md-6">
               <div className="row-md-6">
                 <div className="card">
-                  <h3>PoS Portal Testing</h3>
+                  <h3>PoS Portal with support of NetworkAgnostic</h3>
 
                   <div className="row p-8">
                     <div className="col-md-3 p-0">
@@ -217,69 +206,136 @@ function App() {
                       </Badge>{" "}
                     </div>
                   </div>
-
-                  <div className="row p-8">
-                    <div className="col-md-3 p-0">
-                      <FormControl
-                        onChange={(e) => setChildTokenAddress(e.target.value)}
-                        value={childTokenAddress}
-                        placeholder="Select Token"
-                        aria-label="Select Token"
-                        aria-describedby="token"
-                        as="select"
-                        size="small"
-                        custom
-                      >
-                        <>
-                          {TOKEN_LIST.map((placement) => (
-                            <option value={placement.childTokenAddress}>
-                              {placement.tokenSymbol}
-                            </option>
-                          ))}
-                        </>
-                      </FormControl>
-                    </div>
-                    <div className="col-md-3 p-0">
-                      <FormControl
-                        type="string"
-                        name="Burn Amount"
-                        id="burnAmount"
-                        placeholder="Burn Amount"
-                        value={burnAmount || ""}
-                        onChange={(e) => setBurnAmount(e.target.value)}
-                      ></FormControl>
-                    </div>
-                    <div className="col-md-4 p-0 ">
-                      <OverlayTrigger
-                        key="bottom"
-                        placement="bottom"
-                        overlay={
-                          <Tooltip id="tooltip-bottom">
-                            Burn your tokens on Matic chain so they can be exited from POS Portal on Main chain
-                          </Tooltip>
-                        }
-                      >
-                        <Button
-                          className="button-size m-left-8"
-                          variant="outline-primary"
-                          onClick={() => burn(childTokenAddress, burnAmount)}
+                  <div>
+                    <div className="row p-8">
+                      <div className="col-md-3 p-0">
+                        <FormControl
+                          onChange={(e) => setChildTokenAddress(e.target.value)}
+                          value={childTokenAddress}
+                          placeholder="Select Token"
+                          aria-label="Select Token"
+                          aria-describedby="token"
+                          as="select"
                           size="small"
+                          custom
                         >
-                          Burn
-                        </Button>
-                      </OverlayTrigger>{" "}
+                          <>
+                            {TOKEN_LIST.map((placement) => (
+                              <option value={placement.childTokenAddress}>
+                                {placement.tokenSymbol}
+                              </option>
+                            ))}
+                          </>
+                        </FormControl>
+                      </div>
+
+                      <div className="col-md-4 p-0">
+                        <FormControl
+                          type="string"
+                          name="Address"
+                          id="address"
+                          placeholder="Address: '0x...'"
+                          value={address || ""}
+                          onChange={(e) => setAddress(e.target.value)}
+                        ></FormControl>
+                      </div>
+
+                      <div className="col-md-3 p-0">
+                        <FormControl
+                          type="string"
+                          name="Amount"
+                          id="maticAmount"
+                          placeholder="Amount"
+                          value={maticAmount || ""}
+                          onChange={(e) => setMaticAmount(e.target.value)}
+                        ></FormControl>
+                      </div>
+
+                      <div className="col-md-2 p-0 ">
+                        <Badge
+                          className="button-size m-left-negative-10"
+                          pill
+                          variant="info"
+                        >
+                          Matic
+                        </Badge>{" "}
+                      </div>
                     </div>
-                    <div className="col-md-2 p-0 ">
-                      <Badge
-                        className="button-size m-left-negative-10"
-                        pill
-                        variant="info"
-                      >
-                        Matic
-                      </Badge>{" "}
+
+                    <div className="row">
+                      {/* onClick={() => burn(childTokenAddress, maticAmount)} */}
+                      <div className="col-md-3 p-0 ">
+                        <OverlayTrigger
+                          key="bottom"
+                          placement="bottom"
+                          overlay={
+                            <Tooltip id="tooltip-bottom">
+                              Burn your tokens on Matic chain so they can be
+                              exited from POS Portal on Main chain
+                            </Tooltip>
+                          }
+                        >
+                          <Button
+                            className="button-size m-left-8"
+                            variant="outline-primary"
+                            onClick={() =>
+                              networkAgnosticBurn(
+                                maticAmount,
+                                childTokenAddress
+                              )
+                            }
+                            size="small"
+                          >
+                            Burn
+                          </Button>
+                        </OverlayTrigger>{" "}
+                      </div>
+                      <div className="col-md-3 p-0 ">
+                        <OverlayTrigger
+                          key="bottom"
+                          placement="bottom"
+                          overlay={
+                            <Tooltip id="tooltip-bottom">
+                              Transfer your tokens on Matic chain
+                            </Tooltip>
+                          }
+                        >
+                          <Button
+                            className="button-size m-left-8"
+                            variant="outline-primary"
+                            onClick={() =>
+                              transfer(maticAmount, address, childTokenAddress)
+                            }
+                            size="small"
+                          >
+                            Transfer
+                          </Button>
+                        </OverlayTrigger>{" "}
+                      </div>
+                      <div className="col-md-3 p-0 ">
+                        <OverlayTrigger
+                          key="bottom"
+                          placement="bottom"
+                          overlay={
+                            <Tooltip id="tooltip-bottom">
+                              Allow spender to spend your tokens on Matic chain
+                            </Tooltip>
+                          }
+                        >
+                          <Button
+                            className="button-size m-left-8"
+                            variant="outline-primary"
+                            onClick={() =>
+                              approve(maticAmount, address, childTokenAddress)
+                            }
+                            size="small"
+                          >
+                            Approve
+                          </Button>
+                        </OverlayTrigger>{" "}
+                      </div>
                     </div>
                   </div>
-
                   <div className="row p-8">
                     <div className="col-md-6 p-0">
                       <FormControl
@@ -323,99 +379,8 @@ function App() {
                   </div>
                 </div>
               </div>
-              {/* <div className="row-md-6">
-                <div className="card">
-                  <h2>Map Token</h2>
-                  <p>ps: Only permissioned address can map token</p>
-                  <input
-                    type="string"
-                    name="rootToken"
-                    id="rootToken"
-                    placeholder="Root Token Address"
-                    value={rootToken}
-                    onChange={(e) => setRootToken(e.target.value)}
-                  />
-                  <input
-                    type="string"
-                    name="childToken"
-                    id="childToken"
-                    placeholder="Child Token Address"
-                    value={childToken}
-                    onChange={(e) => setChildToken(e.target.value)}
-                  />
-                  <p> map from Root to Matic | map from Matic to Root</p>
-                  <button
-                    onClick={() => mapTokenRootChain(rootToken, childToken)}
-                  >
-                    Map Token(on Ropsten)
-                  </button>
-                  <button
-                    onClick={() => mapTokenChildChain(rootToken, childToken)}
-                  >
-                    Map Token(on Matic)
-                  </button>
-                  <p>Check for Successful Mapping</p>
-                  <button onClick={() => checkMapToken(rootToken, childToken)}>
-                    Check Mapping
-                  </button>
-                </div>
-              </div>*/}
             </div>
-            <div className="col-md-6">
-              <div className="row-md-3">
-                <div className="card">
-                  <span className="row">
-                    <Badge className="col-md-3 balance" variant="success">
-                      Ropsten Balance
-                    </Badge>{" "}
-                    <Badge className="col-md-3 balance">
-                      {Number.parseFloat(ethRopstenBalance).toFixed(3)} ETH{" "}
-                    </Badge>
-                    <Badge className="col-md-3 balance">
-                      {Number.parseFloat(dummyTokenRopstenBalance).toFixed(3)}{" "}
-                      DUMMY{" "}
-                    </Badge>
-                    <Button
-                      className="col-md-3 balance"
-                      variant="outline-secondary"
-                      onClick={() => refreshRopstenBalance()}
-                    >
-                      Refresh
-                    </Button>
-                  </span>
-                  <span className="row">
-                    <Badge className="col-md-3 balance" variant="primary">
-                      Matic Balance
-                    </Badge>{" "}
-                    <Badge className="col-md-3 balance">
-                      {Number.parseFloat(ethMaticBalance).toFixed(3)} ETH{" "}
-                    </Badge>
-                    <Badge className="col-md-3 balance">
-                      {Number.parseFloat(dummyTokenMaticBalance).toFixed(3)}{" "}
-                      DUMMY{" "}
-                    </Badge>
-                    <Button
-                      className="col-md-3 balance"
-                      variant="outline-secondary"
-                      onClick={() => refreshMaticBalance()}
-                    >
-                      Refresh
-                    </Button>
-                  </span>
-                </div>
-              </div>
-              <div className="row-md-3">
-                <div className="card">
-                  <h4>Mint Dummy Tokens for Testing</h4>
-                  <Button variant="outline-success" onClick={() => mint()} size="sm">
-                    Mint Dummy Tokens
-                  </Button>
-                </div>
-              </div>
-              <div className="row-md-6">
-                Transaction History(Coming Soon!!!)
-              </div>
-            </div>
+            <UserStatus />
           </div>
         </Container>
       </React.Fragment>
