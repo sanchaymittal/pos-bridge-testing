@@ -4,8 +4,7 @@ import {
   ROOT_CHAIN_MANAGER_ADDRESS,
   CHILD_CHAIN_MANAGER_ADDRESS,
   PLASMA_ROOT_CHAIN_ADDRESS,
-  ROOT_DUMMY_TOKEN_ABI,
-  ROOT_DUMMY_TOKEN_ADDRESS,
+  ROOT_TOKEN_ABI,
   ERC20_ABI,
   ROOT_PROVIDER,
   CHILD_PROVIDER,
@@ -59,17 +58,17 @@ export function getAccounts() {
   });
 }
 
-export const mint = async () => {
+export const mint = async (pTokenAddress) => {
   const pAmount = "2";
   const address = await getDefaultAccount();
   const userBalance = await getUserTokenBalance(
-    ROOT_DUMMY_TOKEN_ADDRESS,
+    pTokenAddress,
     ROOT_PROVIDER
   );
   if (userBalance < 1) {
     const token = new web3.eth.Contract(
-      ROOT_DUMMY_TOKEN_ABI,
-      ROOT_DUMMY_TOKEN_ADDRESS
+      ROOT_TOKEN_ABI,
+      pTokenAddress
     );
     const amount = web3.utils.toWei(pAmount + "");
     await token.methods.mint(amount).send({ from: address });
