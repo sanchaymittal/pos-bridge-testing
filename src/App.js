@@ -48,14 +48,9 @@ function App() {
   const [txHash, setTxHash] = React.useState("");
   const [account, setAccount] = React.useState("");
   const [networkType, setNetworkType] = React.useState("");
-  const [
-    dummyTokenRopstenBalance,
-    setDummyTokenRopstenBalance,
-  ] = React.useState("");
   const [dummyTokenMaticBalance, setDummyTokenMaticBalance] = React.useState(
     ""
   );
-  const [ethRopstenBalance, setEthRopstenBalance] = React.useState("");
   const [ethMaticBalance, setEthMaticBalance] = React.useState("");
   const [rootTokenAddress, setRootTokenAddress] = React.useState(
     TOKEN_LIST[0].rootTokenAddress
@@ -66,18 +61,6 @@ function App() {
   const [amount, setAmount] = React.useState(0);
   const [maticAmount, setMaticAmount] = React.useState(0);
   const [address, setAddress] = React.useState("");
-
-  const updateDummyTokenRopstenBalance = async () => {
-    const dummyRopstenBalance = await getUserTokenBalance(
-      ROOT_DUMMY_TOKEN_ADDRESS,
-      ROOT_PROVIDER
-    );
-    await setDummyTokenRopstenBalance(dummyRopstenBalance);
-  };
-  const updateEthRopstenBalance = async () => {
-    const RopstenBalance = await getEthBalance(ROOT_PROVIDER);
-    await setEthRopstenBalance(RopstenBalance);
-  };
 
   const updateEthMaticBalance = async () => {
     const MaticBalance = await await getUserTokenBalance(
@@ -95,8 +78,8 @@ function App() {
     await setDummyTokenMaticBalance(dummyMaticBalance);
   };
 
-  const deposit = async (ROOT_DUMMY_TOKEN_ADDRESS, amount) => {
-    await rootToMatic(ROOT_DUMMY_TOKEN_ADDRESS, amount);
+  const deposit = async (tokenAddress, amount) => {
+    await rootToMatic(tokenAddress, amount);
     await updateDummyTokenMaticBalance();
   };
 
@@ -127,7 +110,7 @@ function App() {
             <h7>
               Hint: open the browser developer console to view any errors and
               warnings.
-              <br/>
+              <br />
               Interact with Matic Network from Ropsten Only...
             </h7>
           </Jumbotron>
@@ -174,7 +157,8 @@ function App() {
                         placement="bottom"
                         overlay={
                           <Tooltip id="tooltip-bottom">
-                            Ropsten -> Matic : Lock your tokens in POS Portal contract and mint on Matic.
+                            Ropsten -> Matic : Lock your tokens in POS Portal
+                            contract and mint on Matic.
                           </Tooltip>
                         }
                       >
@@ -349,7 +333,8 @@ function App() {
                         placement="bottom"
                         overlay={
                           <Tooltip id="tooltip-bottom">
-                            Submit proof for burnt tokens and exit them from POS Portal
+                            Submit proof for burnt tokens and exit them from POS
+                            Portal
                           </Tooltip>
                         }
                       >

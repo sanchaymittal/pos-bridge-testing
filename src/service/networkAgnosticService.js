@@ -2,7 +2,7 @@ import Biconomy from "@biconomy/mexa";
 import {
   CHILD_ETH_TOKEN_ADDRESS,
   CHILD_ETH_TOKEN_ABI,
-  CHILD_DUMMY_TOKEN_ABI,
+  CHILD_TOKEN_ABI,
   CHILD_DUMMY_TOKEN_ADDRESS,
 } from "../constants";
 import { getDefaultAccount } from "./web3Service";
@@ -51,7 +51,7 @@ biconomy
 export const getContractDetails = async (pAddress) => {
   let abi;
   if (pAddress === CHILD_ETH_TOKEN_ADDRESS) abi = CHILD_ETH_TOKEN_ABI;
-  else abi = CHILD_DUMMY_TOKEN_ABI;
+  else abi = CHILD_TOKEN_ABI;
   const contract = new getWeb3.eth.Contract(abi, pAddress);
   const tokenName = await contract.methods.name().call();
   console.log(tokenName);

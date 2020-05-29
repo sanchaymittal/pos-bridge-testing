@@ -11,10 +11,10 @@ export const TOKEN_LIST = [
 	  rootTokenAddress: "0x0D2be3F144ca1f7c106F586eDA2Ab2F8921f89E6",
 	  childTokenAddress: "0xefa67A7B52972eF721a6D6227A3C356a62CcBa58",
   },
-  // {
-  //   tokenName: "Decentraland",
-	//   tokenSymbol: "MANA",
-	//   rootTokenAddress: "0x3486DC2Bf6d45Da6E0bb96a9999a4744F9a6B421",
-	//   childTokenAddress: "0xb6e5aaaE04acb59f2e7D951a9bC31855Ca2813aD",
-  // }
+  {
+    tokenName: "Decentraland",
+	  tokenSymbol: "MANA",
+	  rootTokenAddress: "0x3486DC2Bf6d45Da6E0bb96a9999a4744F9a6B421",
+	  childTokenAddress: "0xb6e5aaaE04acb59f2e7D951a9bC31855Ca2813aD",
+  }
 ];
