@@ -3,7 +3,6 @@ import {
   CHILD_ETH_TOKEN_ADDRESS,
   CHILD_ETH_TOKEN_ABI,
   CHILD_TOKEN_ABI,
-  CHILD_DUMMY_TOKEN_ADDRESS,
 } from "../constants";
 import { getDefaultAccount } from "./web3Service";
 const Web3 = require("web3");

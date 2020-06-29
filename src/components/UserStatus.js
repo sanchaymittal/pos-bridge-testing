@@ -14,8 +14,6 @@ import {
   CHILD_PROVIDER,
   ROOT_DUMMY_TOKEN_ADDRESS,
   CHILD_DUMMY_TOKEN_ADDRESS,
-  ROOT_MANA_ADDRESS,
-  CHILD_MANA_ADDRESS,
   CHILD_ETH_TOKEN_ADDRESS,
 } from "../constants";
 
@@ -26,8 +24,6 @@ function UserStatus() {
     updateEthGoerliBalance();
     updateEthMaticBalance();
     updateDummyTokenGoerliBalance();
-    updateManaMaticBalance();
-    updateManaGoerliBalance();
   });
   const [
     dummyTokenGoerliBalance,
@@ -38,21 +34,12 @@ function UserStatus() {
   );
   const [ethGoerliBalance, setEthGoerliBalance] = React.useState("");
   const [ethMaticBalance, setEthMaticBalance] = React.useState("");
-  const [manaGoerliBalance, setManaGoerliBalance] = React.useState("");
-  const [manaMaticBalance, setManaMaticBalance] = React.useState("");
   const updateDummyTokenGoerliBalance = async () => {
     const dummyGoerliBalance = await getUserTokenBalance(
       ROOT_DUMMY_TOKEN_ADDRESS,
       ROOT_PROVIDER
     );
     await setDummyTokenGoerliBalance(dummyGoerliBalance);
-  };
-  const updateManaGoerliBalance = async () => {
-    const dummyGoerliBalance = await getUserTokenBalance(
-      ROOT_MANA_ADDRESS,
-      ROOT_PROVIDER
-    );
-    await setManaGoerliBalance(dummyGoerliBalance);
   };
   const updateEthGoerliBalance = async () => {
     const GoerliBalance = await getEthBalance(ROOT_PROVIDER);
@@ -74,25 +61,15 @@ function UserStatus() {
     );
     await setDummyTokenMaticBalance(dummyMaticBalance);
   };
-  const updateManaMaticBalance = async () => {
-    const dummyMaticBalance = await getUserTokenBalance(
-      CHILD_MANA_ADDRESS,
-      CHILD_PROVIDER
-    );
-    await setManaMaticBalance(dummyMaticBalance);
-  };
-
 
   const refreshMaticBalance = async () => {
     await updateEthMaticBalance();
     await updateDummyTokenMaticBalance();
-    await updateManaMaticBalance();
   };
 
   const refreshGoerliBalance = async () => {
     await updateEthGoerliBalance();
     await updateDummyTokenGoerliBalance();
-    await updateManaGoerliBalance();
   };
 
   return (
@@ -104,14 +81,11 @@ function UserStatus() {
             <Badge className="col-md-2 balance" variant="success">
               Goerli
             </Badge>{" "}
-            <Badge className="col-md-2 balance">
+            <Badge className="col-md-4 balance">
               {Number.parseFloat(ethGoerliBalance).toFixed(3)} ETH{" "}
             </Badge>
-            <Badge className="col-md-3 balance">
+            <Badge className="col-md-4 balance">
               {Number.parseFloat(dummyTokenGoerliBalance).toFixed(3)} DUMMY{" "}
-            </Badge>
-            <Badge className="col-md-3 balance">
-              {Number.parseFloat(manaGoerliBalance).toFixed(3)} MANA{" "}
             </Badge>
             <Button
               className="col-md-2 balance"
@@ -125,14 +99,11 @@ function UserStatus() {
             <Badge className="col-md-2 balance" variant="primary">
               Matic
             </Badge>{" "}
-            <Badge className="col-md-2 balance">
+            <Badge className="col-md-4 balance">
               {Number.parseFloat(ethMaticBalance).toFixed(3)} ETH{" "}
             </Badge>
-            <Badge className="col-md-3 balance">
+            <Badge className="col-md-4 balance">
               {Number.parseFloat(dummyTokenMaticBalance).toFixed(3)} DUMMY{" "}
-            </Badge>
-            <Badge className="col-md-3 balance">
-              {Number.parseFloat(manaMaticBalance).toFixed(3)} MANA{" "}
             </Badge>
             <Button
               className="col-md-2 balance"
@@ -149,9 +120,6 @@ function UserStatus() {
           <h4>Mint Tokens for Testing</h4>
           <Button variant="outline-success" onClick={() => mint(ROOT_DUMMY_TOKEN_ADDRESS)} size="sm">
             Dummy Tokens
-          </Button>
-          <Button variant="outline-success" onClick={() => mint(ROOT_MANA_ADDRESS)} size="sm">
-            MANA Tokens
           </Button>
         </div>
       </div>

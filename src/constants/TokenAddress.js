@@ -11,10 +11,4 @@ export const TOKEN_LIST = [
 	  rootTokenAddress: "0x24EB81d800786fFAD0F26611868B8d8a02303790",
     childTokenAddress: "0x6EC9cF44A185102b9A312dae7C8f6D8961C0E020",
   },
-  {
-    tokenName: "Decentraland",
-	  tokenSymbol: "MANA",
-	  rootTokenAddress: "0xb2eda8A855A4176B7f8758E0388b650BcB1828a4",
-	  childTokenAddress: "0xc7bb71b405ea25A9251a1ea060C2891b84BE1929",
-  }
 ];

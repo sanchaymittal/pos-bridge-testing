@@ -13,24 +13,19 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   getDefaultAccount,
-  burn,
   exit,
   rootToMatic,
   depositEth,
   getUserTokenBalance,
-  getEthBalance,
   getNetwork,
 } from "./service/web3Service";
 import {
   networkAgnosticBurn,
   transfer,
   approve,
-  transferFrom,
 } from "./service/networkAgnosticService";
 import {
-  ROOT_PROVIDER,
   CHILD_PROVIDER,
-  ROOT_DUMMY_TOKEN_ADDRESS,
   CHILD_DUMMY_TOKEN_ADDRESS,
   ROOT_ETH_TOKEN_ADDRESS,
   CHILD_ETH_TOKEN_ADDRESS,
@@ -157,12 +152,12 @@ function App() {
                         placement="bottom"
                         overlay={
                           <Tooltip id="tooltip-bottom">
-                            Goerli -> Matic : Lock your tokens in POS Portal
+                            Goerli to Matic : Lock your tokens in POS Portal
                             contract and mint on Matic.
                           </Tooltip>
                         }
                       >
-                        <Button
+                        <Buttonx
                           className="button-size m-left-8"
                           variant="outline-success"
                           onClick={() =>

@@ -153,12 +153,6 @@ export const checkMapToken = async (rootToken, childToken) => {
   }
 };
 
-async function PromiseTimeout(delayms) {
-  return new Promise(function (resolve, reject) {
-    setTimeout(resolve, delayms);
-  });
-}
-
 export const approve = async (rootToken, pAmount) => {
   const amount = web3.utils.toWei(pAmount + "");
   console.log(amount, pAmount);
