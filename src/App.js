@@ -111,7 +111,7 @@ function App() {
               Hint: open the browser developer console to view any errors and
               warnings.
               <br />
-              Interact with Matic Network from Ropsten Only...
+              Interact with Matic Network from Parent Chain Only...
             </h7>
           </Jumbotron>
           <div className="row">
@@ -157,7 +157,7 @@ function App() {
                         placement="bottom"
                         overlay={
                           <Tooltip id="tooltip-bottom">
-                            Ropsten -> Matic : Lock your tokens in POS Portal
+                            Goerli -> Matic : Lock your tokens in POS Portal
                             contract and mint on Matic.
                           </Tooltip>
                         }
@@ -182,7 +182,7 @@ function App() {
                         pill
                         variant="info"
                       >
-                        Ropsten
+                        Goerli
                       </Badge>{" "}
                     </div>
                   </div>
@@ -354,7 +354,7 @@ function App() {
                         pill
                         variant="info"
                       >
-                        Ropsten
+                        Goerli
                       </Badge>{" "}
                     </div>
                   </div>

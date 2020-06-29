@@ -28,8 +28,8 @@ const web3 = new Web3(window.ethereum);
 export const getNetwork = async () => {
   const chainId = await web3.eth.net.getId();
   let network;
-  if (chainId === 3) network = "Ropsten";
-  else if (chainId === 15001) network = "Matic";
+  if (chainId === 5) network = "Goerli";
+  else if (chainId === 80001) network = "Matic";
   else network = "Unknown";
   return network;
 };

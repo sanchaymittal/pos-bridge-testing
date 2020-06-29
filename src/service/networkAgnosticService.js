@@ -10,10 +10,10 @@ const Web3 = require("web3");
 
 let sigUtil = require("eth-sig-util");
 
-const biconomyAPIKey = "yhgD9_k2A.a88e1bb4-056c-4bb0-ac52-5d917ce8c7bc"; // add your api  key from the dashboard
+const biconomyAPIKey = "N8FkUan7Q.04397fcc-6a14-45c6-b881-8e08b0c11400"; // add your api  key from the dashboard
 
-const parentChainId = "3"; // chain id of the network tx is signed on
-const maticProvider = "https://testnetv3.matic.network";
+const parentChainId = "5"; // chain id of the network tx is signed on
+const maticProvider = "https://rpc-mumbai.matic.today";
 
 const domainType = [
   { name: "name", type: "string" },
@@ -61,6 +61,7 @@ export const getContractDetails = async (pAddress) => {
     chainId: parentChainId,
     verifyingContract: pAddress,
   };
+  console.log(domainData)
   return { contract, domainData };
 };
 export const networkAgnosticBurn = async (pAmount, address) => {
@@ -82,13 +83,19 @@ export const transfer = async (pAmount, pRecipient, tokenAddress) => {
 };
 
 export const approve = async (pAmount, spender, tokenAddress) => {
+  console.log("enter");
   const detail = await getContractDetails(tokenAddress);
+  console.log(detail)
   const amount = web3.utils.toWei(pAmount + "");
-  let userAddress = await getDefaultAccount();
+  // let userAddress = await getDefaultAccount();
   let functionSignature = detail.contract.methods
     .approve(spender, amount)
     .encodeABI();
   console.log(functionSignature);
+  // const contract = new web3.eth.Contract(CHILD_TOKEN_ABI, tokenAddress);
+  // await contract.methods
+  //   .approve(spender, amount)
+  //   .send({from: userAddress});
   executeMetaTransaction(functionSignature, detail.contract, detail.domainData);
 };
 

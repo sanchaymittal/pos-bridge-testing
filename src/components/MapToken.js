@@ -21,7 +21,7 @@ function MapToken() {
       />
       <p> map from Root to Matic | map from Matic to Root</p>
       <button onClick={() => mapTokenRootChain(rootToken, childToken)}>
-        Map Token(on Ropsten)
+        Map Token(on Goerli)
       </button>
       <button onClick={() => mapTokenChildChain(rootToken, childToken)}>
         Map Token(on Matic)

@@ -1,17 +1,20 @@
 {
   "root": {
-    "RPC": "https://ropsten.infura.io/v3/70645f042c3a409599c60f96f6dd9fbc",
-    "PlasmaRootChain": "0x82a72315E16cE224f28E1F1fB97856d3bF83f010",
-    "POSRootChainManager": "0xC5C4a4086FE913b5D525915404C88d12b4031CC0",
-    "DummyToken": "0x0D2be3F144ca1f7c106F586eDA2Ab2F8921f89E6",
-    "WETH": "0x33fbCcfb7499cD2daaADe2E1eAcecbDC42beEC96",
-    "MANA": "0x3486DC2Bf6d45Da6E0bb96a9999a4744F9a6B421"
+    "Network": "Goerli",
+    "RPC": "https://goerli.infura.io/v3/70645f042c3a409599c60f96f6dd9fbc",
+    "PlasmaRootChain": "0x2890bA17EfE978480615e330ecB65333b880928e",
+    "POSRootChainManager": "0x53Df1D4F98602a04661486AAF433952878706077",
+    "DummyToken": "0x24EB81d800786fFAD0F26611868B8d8a02303790",
+    "WETH": "0xd0A5b09353db5aaE3d133511e17Ec8369757be7c",
+    "MANA": "0xb2eda8A855A4176B7f8758E0388b650BcB1828a4"
   },
   "child": {
-    "RPC": "https://testnetv3.matic.network",
-    "ChildChainManager": "0x730bBdaaD9C21fFaf84502851F56375a10e326a1",
-    "DummyToken": "0xefa67A7B52972eF721a6D6227A3C356a62CcBa58",
-    "WETH":"0x911e1ea5C50DC54e1d24845ce056FB914bB25D96",
-    "MANA": "0xb6e5aaaE04acb59f2e7D951a9bC31855Ca2813aD"
+		"Network": "Mumbai",
+    "RPC": "https://rpc-mumbai.matic.today",
+		"WSRPC": "wss://ws-mumbai.matic.today",
+    "ChildChainManager": "0x168ea52F1fAfe28d584F94357383d4f6FA8a749A",
+    "DummyToken": "0x6EC9cF44A185102b9A312dae7C8f6D8961C0E020",
+    "WETH": "0x670568761764f53E6C10cd63b71024c31551c9EC",
+    "MANA": "0xc7bb71b405ea25A9251a1ea060C2891b84BE1929"
   }
 }

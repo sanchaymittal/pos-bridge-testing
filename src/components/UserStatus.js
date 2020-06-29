@@ -23,40 +23,40 @@ import {
 function UserStatus() {
   window.addEventListener("load", async function () {
     updateDummyTokenMaticBalance();
-    updateEthRopstenBalance();
+    updateEthGoerliBalance();
     updateEthMaticBalance();
-    updateDummyTokenRopstenBalance();
+    updateDummyTokenGoerliBalance();
     updateManaMaticBalance();
-    updateManaRopstenBalance();
+    updateManaGoerliBalance();
   });
   const [
-    dummyTokenRopstenBalance,
-    setDummyTokenRopstenBalance,
+    dummyTokenGoerliBalance,
+    setDummyTokenGoerliBalance,
   ] = React.useState("");
   const [dummyTokenMaticBalance, setDummyTokenMaticBalance] = React.useState(
     ""
   );
-  const [ethRopstenBalance, setEthRopstenBalance] = React.useState("");
+  const [ethGoerliBalance, setEthGoerliBalance] = React.useState("");
   const [ethMaticBalance, setEthMaticBalance] = React.useState("");
-  const [manaRopstenBalance, setManaRopstenBalance] = React.useState("");
+  const [manaGoerliBalance, setManaGoerliBalance] = React.useState("");
   const [manaMaticBalance, setManaMaticBalance] = React.useState("");
-  const updateDummyTokenRopstenBalance = async () => {
-    const dummyRopstenBalance = await getUserTokenBalance(
+  const updateDummyTokenGoerliBalance = async () => {
+    const dummyGoerliBalance = await getUserTokenBalance(
       ROOT_DUMMY_TOKEN_ADDRESS,
       ROOT_PROVIDER
     );
-    await setDummyTokenRopstenBalance(dummyRopstenBalance);
+    await setDummyTokenGoerliBalance(dummyGoerliBalance);
   };
-  const updateManaRopstenBalance = async () => {
-    const dummyRopstenBalance = await getUserTokenBalance(
+  const updateManaGoerliBalance = async () => {
+    const dummyGoerliBalance = await getUserTokenBalance(
       ROOT_MANA_ADDRESS,
       ROOT_PROVIDER
     );
-    await setManaRopstenBalance(dummyRopstenBalance);
+    await setManaGoerliBalance(dummyGoerliBalance);
   };
-  const updateEthRopstenBalance = async () => {
-    const RopstenBalance = await getEthBalance(ROOT_PROVIDER);
-    await setEthRopstenBalance(RopstenBalance);
+  const updateEthGoerliBalance = async () => {
+    const GoerliBalance = await getEthBalance(ROOT_PROVIDER);
+    await setEthGoerliBalance(GoerliBalance);
   };
 
   const updateEthMaticBalance = async () => {
@@ -89,10 +89,10 @@ function UserStatus() {
     await updateManaMaticBalance();
   };
 
-  const refreshRopstenBalance = async () => {
-    await updateEthRopstenBalance();
-    await updateDummyTokenRopstenBalance();
-    await updateManaRopstenBalance();
+  const refreshGoerliBalance = async () => {
+    await updateEthGoerliBalance();
+    await updateDummyTokenGoerliBalance();
+    await updateManaGoerliBalance();
   };
 
   return (
@@ -102,21 +102,21 @@ function UserStatus() {
         <h4>User Balance</h4>
           <span className="row">
             <Badge className="col-md-2 balance" variant="success">
-              Ropsten
+              Goerli
             </Badge>{" "}
             <Badge className="col-md-2 balance">
-              {Number.parseFloat(ethRopstenBalance).toFixed(3)} ETH{" "}
+              {Number.parseFloat(ethGoerliBalance).toFixed(3)} ETH{" "}
             </Badge>
             <Badge className="col-md-3 balance">
-              {Number.parseFloat(dummyTokenRopstenBalance).toFixed(3)} DUMMY{" "}
+              {Number.parseFloat(dummyTokenGoerliBalance).toFixed(3)} DUMMY{" "}
             </Badge>
             <Badge className="col-md-3 balance">
-              {Number.parseFloat(manaRopstenBalance).toFixed(3)} MANA{" "}
+              {Number.parseFloat(manaGoerliBalance).toFixed(3)} MANA{" "}
             </Badge>
             <Button
               className="col-md-2 balance"
               variant="outline-secondary"
-              onClick={() => refreshRopstenBalance()}
+              onClick={() => refreshGoerliBalance()}
             >
               Refresh
             </Button>
