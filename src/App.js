@@ -157,7 +157,7 @@ function App() {
                           </Tooltip>
                         }
                       >
-                        <Buttonx
+                        <Button
                           className="button-size m-left-8"
                           variant="outline-success"
                           onClick={() =>
